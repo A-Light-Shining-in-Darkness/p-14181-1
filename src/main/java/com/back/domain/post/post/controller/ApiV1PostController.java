@@ -42,7 +42,9 @@ public class ApiV1PostController {
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     @Operation(summary = "단건 조회")
-    public PostDto getItem(@PathVariable int id) {
+    public PostDto getItem(
+            @PathVariable int id
+    ) {
         Post post = postService.findById(id).get();
 
         return new PostDto(post);
@@ -63,7 +65,7 @@ public class ApiV1PostController {
     }
 
 
-    record PostWriteReqBody(
+    public record PostWriteReqBody(
             @NotBlank
             @Size(min = 2, max = 100)
             String title,
@@ -90,7 +92,7 @@ public class ApiV1PostController {
         );
     }
 
-    record PostModifyReqBody(
+    public record PostModifyReqBody(
             @NotBlank
             @Size(min = 2, max = 100)
             String title,
