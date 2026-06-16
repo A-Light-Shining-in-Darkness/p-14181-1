@@ -1,5 +1,6 @@
 package com.back.domain.post.postComment.controller;
 
+import com.back.domain.member.member.service.MemberService;
 import com.back.domain.post.post.entity.Post;
 import com.back.domain.post.post.service.PostService;
 import com.back.domain.post.postComment.entity.PostComment;
@@ -30,6 +31,8 @@ public class ApiV1PostCommentControllerTest {
     private MockMvc mvc;
     @Autowired
     private PostService postService;
+    @Autowired
+    private MemberService memberService;
 
     @Test
     @DisplayName("댓글 단건조회")
@@ -98,10 +101,14 @@ public class ApiV1PostCommentControllerTest {
     void t3() throws Exception {
         int postId = 1;
         int id = 1;
+        Post post = postService.findById(postId).get();
+        PostComment postComment = post.findCommentById(id).get();
+        String actorApiKey = postComment.getAuthor().getApiKey();
 
         ResultActions resultActions = mvc
                 .perform(
                         delete("/api/v1/posts/%d/comments/%d".formatted(postId, id))
+                                .header("Authorization", "Bearer " + actorApiKey)
                 )
                 .andDo(print());
 
@@ -118,10 +125,14 @@ public class ApiV1PostCommentControllerTest {
     void t4() throws Exception {
         int postId = 1;
         int id = 1;
+        Post post = postService.findById(postId).get();
+        PostComment postComment = post.findCommentById(id).get();
+        String actorApiKey = postComment.getAuthor().getApiKey();
 
         ResultActions resultActions = mvc
                 .perform(
                         put("/api/v1/posts/%d/comments/%d".formatted(postId, id))
+                                .header("Authorization", "Bearer " + actorApiKey)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
                                         {
@@ -144,9 +155,12 @@ public class ApiV1PostCommentControllerTest {
     void t5() throws Exception {
         int postId = 1;
 
+        String actorApiKey = memberService.findByUsername("user1").get().getApiKey();
+
         ResultActions resultActions = mvc
                 .perform(
                         post("/api/v1/posts/%d/comments".formatted(postId))
+                                .header("Authorization", "Bearer " + actorApiKey)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
                                         {
