@@ -36,6 +36,6 @@ public class PostComment extends BaseEntity {
     }
 
     public void checkActorCanDelete(Member actor) {
-        if (!actor.equals(this.author)) throw new ServiceException("403-1", "%d번 댓글 삭제권한이 없습니다.".formatted(getId()));
+        if (!actor.equals(this.author)) throw new ServiceException("403-2", "%d번 댓글 삭제 권한이 없습니다.".formatted(getId()));
     }
 }
