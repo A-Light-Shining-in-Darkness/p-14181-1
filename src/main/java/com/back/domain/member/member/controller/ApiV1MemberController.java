@@ -40,7 +40,7 @@ public class ApiV1MemberController {
     @GetMapping("/me")
     @Transactional(readOnly = true)
     public RsData<MemberDto> me() {
-        Member member = rq.getActor();
+        Member member = memberService.findById(rq.getActor().getId()).get();
 
         return new RsData<>(
                 "200-1",
