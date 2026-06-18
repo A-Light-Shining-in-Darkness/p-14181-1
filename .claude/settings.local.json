@@ -5,7 +5,12 @@
       "Bash(git checkout *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(./gradlew test *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\kor20\\\\IdeaProjects\\\\p-14181-1\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(git *)"
     ]
   }
 }
